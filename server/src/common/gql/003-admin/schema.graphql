@@ -1,0 +1,898 @@
+type AdminMetrics {
+	usersTotal: Int
+	users24H: Int
+	depositsTotal: Int
+	deposits24H: Int
+	withdrawsTotal: Int
+	withdraws24H: Int
+	ordersTotal: Int
+	ordersTotalPending: Int
+	orders24H: Int
+	orders24HPartialFilled: Int
+	orders24HFilled: Int
+	tradesTotal: Int
+	trades24H: Int
+}
+
+type AdminDeposit {
+	id: Int
+	currency_code: String
+	currency: AdminCurrency
+	amount: Float
+	fee: Float
+	txid: String
+	confirmations: Int
+	state: String
+	completed_at: String
+	created_at: String
+	tid: String
+	member: AdminMember
+	uid: String
+	email: String
+	address: String
+	txout: Int
+	block_number: Int
+	type: String
+	spread: String
+	updated_at: String
+}
+
+type KeyValue {
+	key: String
+	value: String
+}
+
+type AdminCurrency {
+	base_factor: String
+	blockchain_key: String
+	code: String
+	created_at: String
+	deposit_enabled: Boolean
+	deposit_fee: String
+	explorer_address: String
+	explorer_transaction: String
+	min_collection_amount: String
+	min_confirmations: Int
+	min_deposit_amount: String
+	min_withdraw_amount: String
+	name: String
+	options: [KeyValue!]
+	position: Int
+	precision: Int
+	subunits: Int
+	symbol: String
+	type: String
+	updated_at: String
+	icon_url: String
+	visible: Boolean
+	withdraw_fee: String
+	withdraw_limit_24h: String
+	withdraw_limit_72h: String
+	withdrawal_enabled: Boolean
+	blockchain: AdminBlockchain
+	markets: [AdminMarket]
+	wallets: [AdminWallet]
+}
+
+type AdminTradingFee {
+	id: Int
+	group: String
+	market_id: String
+	maker: Float
+	taker: Float
+	created_at: String
+	updated_at: String
+}
+
+type AdminMarket {
+	amount_precision: Int
+	base_unit: String
+	created_at: String
+	id: String
+	max_price: String
+	min_amount: String
+	min_price: String
+	name: String
+	position: Int
+	price_precision: Int
+	quote_unit: String
+	enabled: Boolean
+	updated_at: String
+	base_currency: AdminCurrency
+	quote_currency: AdminCurrency
+}
+
+type AdminWalletSettings {
+	uri: String
+	secret: String
+	testnet: Boolean
+	wallet_id: String
+	access_token: String
+}
+
+type AdminWallet {
+	address: String
+	blockchain_key: String
+	currency_code: String
+	gateway: String
+	id: Int
+	kind: String
+	max_balance: String
+	name: String
+	settings: AdminWalletSettings
+	enabled: Boolean
+	created_at: String
+	updated_at: String
+	blockchain: AdminBlockchain
+	currency: AdminCurrency
+}
+
+type AdminBlockchain {
+	id: Int
+	client: String
+	explorer_address: String
+	explorer_transaction: String
+	height: Int
+	key: String
+	min_confirmations: Int
+	name: String
+	server: String
+	enabled: Boolean
+	created_at: String
+	updated_at: String
+	currencies: [AdminCurrency]
+}
+
+type AdminProfile {
+	address: String
+	city: String
+	country: String
+	dob: String
+	first_name: String
+	last_name: String
+	metadata: String
+	postcode: String
+	state: String
+	created_at: String
+	updated_at: String
+}
+
+type AdminLabel {
+	key: String
+	scope: String
+	value: String
+	description: String
+	created_at: String
+	updated_at: String
+}
+
+type AdminDocUpload {
+	url: String
+}
+
+type AdminDocument {
+	doc_expire: String
+	doc_number: String
+	doc_type: String
+	metadata: String
+	created_at: String
+	updated_at: String
+	upload: AdminDocUpload
+}
+
+type AdminPhone {
+	country: String
+	number: String
+	validated_at: String
+}
+
+type AdminDataStorage {
+	title: String
+	data: String
+	created_at: String
+	updated_at: String
+}
+
+type AdminUser {
+	uid: String
+	data: String
+	email: String
+	level: Int
+	otp: Boolean
+	profiles: [AdminProfile]
+	phones: [AdminPhone]
+	documents: [AdminDocument]
+	labels: [AdminLabel]
+	data_storages: [AdminDataStorage]
+	referral_uid: String
+	role: String
+	csrf_token: String
+	state: String
+	created_at: String
+	updated_at: String
+	activities(page: Int, limit: Int): [AdminUserActivity]
+}
+
+type AdminUserWithoutActivities {
+	uid: String
+	data: String
+	email: String
+	level: Int
+	otp: Boolean
+	profiles: [AdminProfile]
+	phones: [AdminPhone]
+	documents: [AdminDocument]
+	labels: [AdminLabel]
+	data_storages: [AdminDataStorage]
+	referral_uid: String
+	role: String
+	csrf_token: String
+	state: String
+	created_at: String
+	updated_at: String
+}
+
+type AdminUserActivity {
+	action: String
+	created_at: String
+	data: String
+	result: String
+	topic: String
+	user: AdminUser
+	user_agent: String
+	user_ip: String
+
+}
+
+type AdminUserActivitiesPaginated {
+	page: Int
+	total: Int
+	perPage: Int
+	result: [AdminUserActivity]
+}
+
+type AdminLevel {
+	id: Int
+	key: String
+	value: String
+}
+
+type AdminWithdraw {
+	id: Int
+	currency: AdminCurrency
+	type: String
+	sum: Float
+	fee: Float
+	blockchain_txid: String
+	rid: String
+	state: String
+	confirmations: Int
+	note: String
+	created_at: String
+	updated_at: String
+	completed_at: String
+	uid: String
+	member: AdminMember
+	beneficiary: AdminBeneficiary
+	account: String
+	block_number: Int
+	amount: Float
+	tid: String 
+}
+
+type AdminBeneficiary {
+	id: Int
+	currency: String
+	name: String
+	description: String
+	data: AdminBeneficiaryData
+	state: String
+}
+
+type AdminBeneficiaryData {
+	account_number: String
+	bank_name: String
+	bank_swift_code: String
+	full_name: String
+	intermediary_bank_name: String
+	intermediary_bank_swift_code: String
+	address: String
+}
+
+type AdminOperation {
+	id: Int
+	code: String
+	currency: AdminCurrency
+	credit: String
+	debit: String
+	member: AdminUser
+	account_kind: String
+	rid: String
+	reference_type: String
+	created_at: String
+}
+
+type AdminAdjustment {
+	id: Int
+	reason: String
+	description: String
+	category: String
+	amount: Float
+	validator: AdminUser
+	creator: AdminUser
+	currency: AdminCurrency
+	asset: AdminOperation
+	liability: AdminOperation
+	revenue: AdminOperation
+	expense: AdminOperation
+	state: String
+	asset_account_code: String
+	receiving_account_code: String
+	receiving_member: AdminUser
+	created_at: String
+	updated_at: String
+}
+
+type AdminOrder {
+	id: Int,
+	uuid: String,
+	side: String,
+	ord_type: String,
+	price: Float,
+	avg_price: Float,
+	state: String,
+	market: AdminMarket,
+	created_at: String,
+	updated_at: String,
+	origin_volume: Float,
+	remaining_volume: Float,
+	executed_volume: Float,
+	maker_fee: Float,
+	taker_fee: Float,
+	trades_count: Int,
+	user: AdminUser
+}
+
+type AdminTrade {
+	id: Int,
+	price: Float,
+	amount: Float,
+	total: Float,
+	market: AdminMarket,
+	taker_type: String,
+	maker: AdminUser,
+	maker_fee_currency: String,
+	maker_fee_amount: Float,
+	taker: AdminUser,
+	taker_fee_currency: String,
+	taker_fee_amount: Float,
+	created_at: String
+}
+
+type AdminAccount {
+	currency: AdminCurrency,
+	balance: Float,
+	locked: Float
+}
+
+type AdminMember {
+	user: AdminUser,
+	accounts: [AdminAccount],
+	id: Int,
+	group: String,
+	created_at: String,
+	updated_at: String
+}
+
+type AdminGroup {
+	group: String
+}
+
+type AdminUsersPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminUser]
+}
+
+type AdminWithdrawsPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminWithdraw!]!
+}
+
+type AdminAdjustmentsPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminAdjustment]
+}
+
+type AdminOperationsPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminOperation]
+}
+
+type AdminRestriction {
+	id: Int,
+	category: String,
+	value: String,
+	scope: String,
+	state: String,
+	code: Int,
+	created_at: String,
+	updated_at: String
+}
+
+type AdminRestrictionsPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminRestriction]
+}
+
+type AdminPermission {
+	id: Int,
+	action: String,
+	path: String,
+	role: String,
+	topic: String,
+	verb: String,
+	created_at: String,
+	updated_at: String
+}
+
+type AdminPermissionsPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminPermission]
+}
+
+type AdminDepositPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminDeposit!]!
+}
+
+type AdminTradePaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminTrade]
+}
+
+type AdminOrderPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminOrder]
+}
+
+type AdminWalletPaginated {
+	page: Int,
+	perPage: Int,
+	total: Int,
+	result: [AdminWallet!]!
+}
+
+type Query {
+	adminMetrics(_barong_session: String): AdminMetrics
+	adminUsers(
+		_barong_session: String
+		uid: String
+		email: String
+		role: String
+		first_name: String
+		last_name: String
+		country: String
+		level: Int
+		state: String
+		range: String
+		from: String
+		to: String
+		page: Int
+		limit: Int
+	): AdminUsersPaginated
+	adminUserWithoutActivities(
+		_barong_session: String
+		uid: String
+	): AdminUserWithoutActivities
+	adminUserActivities(
+		_barong_session: String,
+		uid: String,
+		page: String,
+		limit: String,
+		topic: String,
+		action: String,
+		from: String,
+		to: String
+	): AdminUserActivitiesPaginated
+	adminUser(_barong_session: String, userId: String): AdminUser!
+	adminUserByLabel(_barong_session: String, key: String!, value: String!): [AdminUser!]!
+	adminLabels(_barong_session: String): [AdminLabel!]!
+	adminCurrency(_barong_session: String, code: String): AdminCurrency!
+	adminCurrencies(_barong_session: String): [AdminCurrency!]!
+	adminMarkets(_barong_session: String): [AdminMarket!]!
+	adminMarket(_barong_session: String, id: String): AdminMarket!
+	adminWallets(_barong_session: String, kind: String, currency: String, limit: Int, page: Int): AdminWalletPaginated
+	adminWallet(_barong_session: String, id: Int): AdminWallet
+	adminWalletGateways(_barong_session: String): [AdminWalletGateway!]!
+	adminBlockchain(_barong_session: String, id: Int!): AdminBlockchain!
+	adminBlockchains(_barong_session: String): [AdminBlockchain!]!
+	adminBlockchainClients(_barong_session: String): [AdminBlockchainClient!]!
+	adminTradingFees(_barong_session: String): [AdminTradingFee!]!
+	adminLevels(_barong_session: String): [AdminLevel!]!
+	adminDeposit(_barong_session: String, tid: String): AdminDeposit
+	adminDeposits(
+		_barong_session: String,
+		page: Int,
+		limit: Int,
+		uid: String,
+		state: String,
+		type: String,
+		currency: String,
+		ordering: String,
+		order_by: String
+	): AdminDepositPaginated
+	adminPending(
+		_barong_session: String
+		uid: String
+		email: String
+		role: String
+		first_name: String
+		last_name: String
+		country: String
+		level: Int
+		state: String
+		range: String
+		from: String
+		to: String
+		page: Int
+		limit: Int
+	): AdminUsersPaginated
+	adminWithdraws(
+		_barong_session: String
+		state: [String]
+		id: Int
+		txid: String
+		tid: String
+		confirmations: Int
+		rid: String
+		uid: String
+		currency: String
+		type: String
+		range: String
+		from: String
+		to: String
+		page: Int
+		limit: Int
+		ordering: String
+		order_by: String
+	): AdminWithdrawsPaginated
+	adminWithdraw(_barong_session: String, id: Int): AdminWithdraw
+	adminAdjustments(
+		_barong_session: String
+		currency: String
+		range: String
+		from: String
+		to: String
+		limit: Int
+		page: Int
+		ordering: String
+		order_by: String
+		state: String
+		category: String
+	): AdminAdjustmentsPaginated
+	adminAdjustment(_barong_session: String, id: Int): AdminAdjustment
+	adminAssets(
+		_barong_session: String,
+		reference_type: String,
+		rid: Int,
+		code: Int,
+		currency: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminOperationsPaginated
+	adminExpenses(
+		_barong_session: String,
+		reference_type: String,
+		rid: Int,
+		code: Int,
+		currency: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminOperationsPaginated
+	adminRevenues(
+		_barong_session: String,
+		reference_type: String,
+		rid: Int,
+		code: Int,
+		currency: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminOperationsPaginated
+	adminLiabilities(
+		_barong_session: String,
+		reference_type: String,
+		rid: Int,
+		code: Int,
+		currency: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminOperationsPaginated
+	adminOrders(
+		_barong_session: String,
+		market: String,
+		state: String,
+		ord_type: String,
+		price: Float,
+		origin_volume: Float,
+		type: String,
+		email: String,
+		uid: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminOrderPaginated
+	adminTrades(
+		_barong_session: String,
+		market: String,
+		uid: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): AdminTradePaginated
+	adminMembers(
+		_barong_session: String,
+		state: String,
+		role: String,
+		group: String,
+		email: String,
+		uid: String,
+		range: String,
+		from: String,
+		to: String,
+		limit: Int,
+		page: Int,
+		ordering: String,
+		order_by: String
+	): [AdminMember]
+	adminMember(_barong_session: String, uid: String): AdminMember
+	adminAvailableGroups(_barong_session: String): [AdminGroup]
+	adminPermissions(
+		_barong_session: String
+		page: Int
+		limit: Int
+	): AdminPermissionsPaginated
+	adminRestrictions(
+		_barong_session: String
+		scope: String
+		range: String
+		page: Int
+		limit: Int
+	): AdminRestrictionsPaginated
+}
+
+type AdminBlockchainClient {
+	client: String
+}
+
+type AdminWalletGateway {
+	gateway: String
+}
+
+type Mutation {
+	createTradingFee(
+		_barong_session: String
+		group: String
+		market_id: String
+		maker: Float
+		taker: Float
+	): AdminBlockchain
+	updateTradingFee(
+		_barong_session: String
+		id: Int
+		group: String
+		market_id: String
+		maker: Float
+		taker: Float
+	): AdminBlockchain
+	createBlockchain(
+		_barong_session: String
+		key: String
+		name: String
+		client: String
+		height: Int
+		explorer_transaction: String
+		explorer_address: String
+		server: String
+		enabled: Boolean
+		min_confirmations: Int
+	): AdminBlockchain
+	updateBlockchain(
+		_barong_session: String
+		id: Int
+		key: String
+		name: String
+		client: String
+		explorer_transaction: String
+		explorer_address: String
+		server: String
+		enabled: Boolean
+		min_confirmations: Int
+	): AdminBlockchain
+	resetBlockchainHeight(_barong_session: String, id: Int, height: Int): AdminBlockchain
+	createWallet(
+		_barong_session: String
+		address: String
+		blockchain_key: String
+		currency: String
+		gateway: String
+		kind: String
+		max_balance: Float
+		name: String
+		settings: String
+		enabled: Boolean
+	): AdminWallet
+	updateWallet(
+		_barong_session: String
+		id: Int
+		address: String
+		blockchain_key: String
+		currency: String
+		gateway: String
+		kind: String
+		max_balance: Float
+		name: String
+		enabled: Boolean
+	): AdminWallet
+	updateWalletSettings(_barong_session: String, id: Int, settings: String): AdminWallet
+	createMarket(
+		_barong_session: String
+		amount_precision: Int
+		base_currency: String
+		max_price: Float
+		min_amount: Float
+		min_price: Float
+		position: Int
+		price_precision: Int
+		quote_currency: String
+		enabled: Boolean
+	): AdminMarket
+	updateMarket(
+		_barong_session: String
+		id: String
+		max_price: Float
+		min_amount: Float
+		min_price: Float
+		position: Int
+		enabled: Boolean
+	): AdminMarket
+	createCurrency(
+		_barong_session: String
+		blockchain_key: String
+		code: String
+		deposit_enabled: Boolean
+		deposit_fee: Float
+		icon_url: String
+		min_collection_amount: Float
+		min_deposit_amount: Float
+		min_withdraw_amount: Float
+		name: String
+		options: String
+		position: Int
+		precision: Int
+		subunits: Int
+		symbol: String
+		type: String
+		visible: Boolean
+		withdraw_fee: Float
+		withdraw_limit_24h: Float
+		withdraw_limit_72h: Float
+		withdrawal_enabled: Boolean
+	): AdminCurrency
+	updateCurrency(
+		_barong_session: String
+		blockchain_key: String
+		code: String
+		deposit_enabled: Boolean
+		deposit_fee: Float
+		icon_url: String
+		min_collection_amount: Float
+		min_deposit_amount: Float
+		min_withdraw_amount: Float
+		name: String
+		options: String
+		position: Int
+		precision: Int
+		subunits: Int
+		symbol: String
+		type: String
+		visible: Boolean
+		withdraw_fee: Float
+		withdraw_limit_24h: Float
+		withdraw_limit_72h: Float
+		withdrawal_enabled: Boolean
+	): AdminCurrency
+	updateUserAttributes(_barong_session: String, uid: String, state: String, otp: Boolean): AdminUser
+	createUserLabel(_barong_session: String, uid: String!, key: String!, value: String!, scope: String): AdminUser
+	updateUserLabelValue(
+		_barong_session: String
+		uid: String!
+		key: String!
+		value: String!
+		scope: String!
+		replace: Boolean
+	): AdminUser
+	deleteUserLabel(_barong_session: String, uid: String!, key: String!, scope: String!): AdminUser
+	updateUserRole(_barong_session: String, uid: String, role: String): AdminUser
+	updateUserProfile(
+		_barong_session: String
+		uid: String
+		first_name: String
+		last_name: String
+		dob: String
+		address: String
+		postcode: String
+		city: String
+		country: String
+		state: String
+		metadata: String
+	): AdminUser
+	createDeposit(_barong_session: String, uid: String!, currency: String!, amount: Float!): AdminDeposit
+	actionDeposit(_barong_session: String, id: Int!, action: String!): AdminDeposit
+	actionWithdraw(_barong_session: String, id: Int!, action: String!, txid: String): AdminWithdraw
+	adminCreateAdjustment(
+		_barong_session: String
+		amount: String
+		asset_account_code: Int
+		category: String
+		currency_id: String
+		description: String
+		reason: String
+		receiving_account_code: Int
+		receiving_member_uid: String
+	): AdminAdjustment
+	actionAdjustment(_barong_session: String, id: Int, action: String): AdminAdjustment
+	adminCancelOrder(_barong_session: String, id: Int): SimpleResponse
+	adminSetUserGroup(_barong_session: String, uid: String, group: String): AdminMember
+	adminCreatePermission(_barong_session: String, role: String, verb: String, path: String, action: String, topic: String): SimpleResponse
+	adminDeletePermission(_barong_session: String, id: Int): SimpleResponse
+	adminUpdatePermission(_barong_session: String, id: Int, role: String, verb: String, path: String, action: String, topic: String): SimpleResponse
+	adminCreateRestriction(_barong_session: String, category: String, value: String, state: String, scope: String): SimpleResponse
+	adminDeleteRestriction(_barong_session: String, id: Int): SimpleResponse
+	adminUpdateRestriction(_barong_session: String, id: Int, category: String, value: String, state: String, scope: String): SimpleResponse
+}

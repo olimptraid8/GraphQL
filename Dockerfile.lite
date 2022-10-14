@@ -1,0 +1,8 @@
+FROM node:lts
+WORKDIR /usr/src/app
+COPY ./server/package*.json ./
+RUN npm install
+COPY ./server .
+RUN rm -rf ./server/common/gql/003-admin
+EXPOSE 4000
+CMD [ "node", "src/index.js" ]

@@ -1,0 +1,19 @@
+{
+    "peatioURL": "https://trade.mobidax.io/api/v2/peatio/",
+    "barongURL": "https://trade.mobidax.io/api/v2/barong/",
+    "rangerURL": "wss://trade.mobidax.io/api/v2/ranger/",
+    "barongDB": {
+        "host": "db",
+        "user": "root",
+        "database": "barong_production",
+        "password": "changeme",
+        "port": "3306"
+    },
+    "peatioDB": {
+        "host": "db",
+        "user": "root",
+        "database": "peatio_production",
+        "password": "changeme",
+        "port": "3306"
+    }
+}

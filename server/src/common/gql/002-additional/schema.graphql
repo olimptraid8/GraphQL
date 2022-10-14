@@ -1,0 +1,197 @@
+enum Topic {
+	ALL
+	SESSION
+	OTP
+	PASSWORD
+}
+
+enum OrderBy {
+	ASC
+	DESC
+}
+
+type Query {
+	authenteqEnabled: Boolean
+	currencies(_barong_session: String): [Currency]
+	markets(search: String, _barong_session: String): [Market]
+	trades(market: String, _barong_session: String): [Trade]
+	kLine(market: String, period: Int, time_from: Int, time_to: Int): [KCandle]
+	balances(_barong_session: String): [Balance]
+	depth(market: String): OrderBook
+	userWithProfile(_barong_session: String): User
+	userOrders(
+		_barong_session: String
+		market: String
+		state: String
+		limit: Int
+		page: Int
+		order_by: String
+		order_type: String
+		type: String
+	): [Order]
+	userTrades(
+		_barong_session: String
+		market: String
+		limit: Int
+		page: Int
+		time_from: Int
+		time_to: Int
+		order_by: String
+	): [Trade]
+	getPhones(_barong_session: String): [Phone]
+	getDepositAddress(_barong_session: String, currency: String!): DepositAddress
+	getBeneficiaries(_barong_session: String, currency: String): [Beneficiary]
+	getDepositHistory(_barong_session: String, currency: String, state: String, limit: Int, page: Int): DepositHistory
+	getWithdrawHistory(_barong_session: String, currency: String, limit: Int, page: Int): WithdrawHistory
+	getActivityHistory(_barong_session: String, topic: Topic!, page: Int, limit: Int): ActivityHistory
+	getTradeHistory(
+		_barong_session: String
+		market: String
+		page: Int
+		limit: Int
+		order_by: OrderBy
+		time_from: Int
+		time_to: Int
+	): TradeHistory
+	getOrderHistory(
+		_barong_session: String
+		market: String
+		state: String
+		page: Int
+		limit: Int
+		order_by: OrderBy
+		type: String
+		ord_type: String
+	): OrderHistory
+	getUserApiKeys(_barong_session: String): [ApiKey]
+}
+
+type Subscription {
+	globalTickers: [Ticker]
+	marketUpdate(market: String): OrderBook
+	marketTrades(market: String): [Trade]
+	marketKLine(market: String, interval: Int): [KCandle]
+	userOrders(_barong_session: String, market: String): [Order]
+	userTrades(_barong_session: String, market: String): [Trade]
+}
+
+type SimpleResponse {
+	data: String
+}
+
+type File {
+	filename: String!
+	mimetype: String!
+	encoding: String!
+}
+
+type Mutation {
+	login(email: String!, password: String!, otp_code: String): User
+	logout(_barong_session: String): SimpleResponse
+	askResetPassword(email: String!, lang: String): SimpleResponse
+	emailConfirm(token: String!, lang: String): SimpleResponse
+	resetPassword(
+		reset_password_token: String!
+		password: String!
+		confirm_password: String!
+		lang: String
+	): SimpleResponse
+	askEmailConfirm(email: String!, lang: String): SimpleResponse
+	createUser(
+		email: String!
+		password: String!
+		refid: String
+		captcha_response: String
+		data: String
+		lang: String
+	): User
+	askQRCodeOTP(_barong_session: String): Barcode
+	enableOTP(_barong_session: String, code: String!): SimpleResponse
+	disableOTP(_barong_session: String, code: String!): SimpleResponse
+	addPhone(_barong_session: String, phone_number: String!): SimpleResponse
+	askPhoneCode(_barong_session: String, phone_number: String!): SimpleResponse
+	verifyPhone(_barong_session: String, phone_number: String!, verification_code: String!): SimpleResponse
+	createOrder(
+		_barong_session: String
+		market: String!
+		side: String!
+		volume: Float!
+		ord_type: String
+		price: Float
+	): Order
+	cancelOrder(_barong_session: String, order_id: Int!): Order
+	cancelAllOrders(_barong_session: String, market: String, side: String): [Order]
+	addBeneficiaryCoin(
+		_barong_session: String
+		currency: String!
+		address: String!
+		name: String!
+		description: String
+	): Beneficiary
+	addBeneficiaryFiat(
+		_barong_session: String
+		currency: String!
+		full_name: String!
+		account_number: String
+		bank_name: String
+		bank_swift_code: String
+		intermediary_bank_name: String
+		intermediary_bank_swift_code: String
+		name: String!
+		description: String
+	): Beneficiary
+	deleteBeneficiary(
+		_barong_session: String
+		id: Int
+	): SimpleResponse
+	activateBeneficiary(_barong_session: String, id: Int!, pin: String!): Beneficiary
+	createWithdrawal(
+		_barong_session: String
+		otp: String!
+		beneficiary_id: Int!
+		currency: String!
+		amount: Float!
+		note: String
+	): Withdrawal
+	changePassword(
+		_barong_session: String
+		old_password: String!
+		new_password: String!
+		confirm_password: String!
+	): SimpleResponse
+	saveProfile(
+		_barong_session: String
+		first_name: String
+		last_name: String
+		dateOfBirth: String
+		address: String
+		postcode: String
+		city: String
+		country: String
+		metadata: String
+		confirm: Boolean
+	): Profile # resendPhone(phone_number: String!, channel: String): SimpleResponse# verifyPhone(phone_number: String!, verification_code: String!): SimpleResponse# uploadDocument(doc_type: String!, doc_number: String!, upload: Upload!, doc_expire: String, metadata: String): SimpleResponse
+	uploadKYCDocument(
+		_barong_session: String
+		doc_type: String!
+		doc_number: String!
+		upload: Upload!
+		doc_expire: String!
+		metadata: String
+	): SimpleResponse
+	createApiKey(
+		_barong_session: String
+		otp: String!
+	): ApiKey
+	deleteApiKey(
+		_barong_session: String
+		otp: String!
+		kid: String!
+	): SimpleResponse
+	updateApiKey(
+		_barong_session: String
+		otp: String!
+		kid: String!
+		enabled: Boolean!
+	): SimpleResponse
+}
