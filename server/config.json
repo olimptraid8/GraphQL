@@ -1,7 +1,7 @@
 {
-    "peatioURL": "https://trade.mobidax.io/api/v2/peatio/",
-    "barongURL": "https://trade.mobidax.io/api/v2/barong/",
-    "rangerURL": "wss://trade.mobidax.io/api/v2/ranger/",
+    "peatioURL": "https://app.gocada.app/api/v2/peatio/",
+    "barongURL": "https://app.gocada.app/api/v2/barong/",
+    "rangerURL": "wss://app.gocada.app/api/v2/ranger/",
     "barongDB": {
         "host": "db",
         "user": "root",
